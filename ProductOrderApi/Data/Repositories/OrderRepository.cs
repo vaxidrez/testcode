@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Drawing;
+using Microsoft.EntityFrameworkCore;
 using ProductOrderApi.Data.Entities;
 
 namespace ProductOrderApi.Data.Repositories
@@ -10,7 +11,7 @@ namespace ProductOrderApi.Data.Repositories
         {
             _context = context;
         }
-        public async Task<Order> GetOrderAsync(int id)
+        public async Task<Order?> GetOrderAsync(int id)
         {
             return await _context.Orders
                 .Include(o => o.OrderProducts)
@@ -50,6 +51,11 @@ namespace ProductOrderApi.Data.Repositories
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

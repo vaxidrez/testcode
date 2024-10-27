@@ -14,7 +14,7 @@ namespace ProductOrderApi.Data.Repositories
         {
             return await _context.Products.ToListAsync();
         }
-        public async Task<Product> GetProduct(int id)
+        public async Task<Product?> GetProduct(int id)
         {
             return await _context.Products.FindAsync(id);
         }

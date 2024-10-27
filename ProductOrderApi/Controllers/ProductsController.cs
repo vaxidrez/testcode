@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProductOrderApi.Data.Entities;
-using ProductOrderApi.Helpers;
 using ProductOrderApi.Services;
 
 namespace ProductOrderApi.Controllers
@@ -18,27 +16,50 @@ namespace ProductOrderApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            throw new NotImplementedException();
+            var results = await _productService.GetProducts();
+            return Ok(results);
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            throw new NotImplementedException();
+            var result = await _productService.GetProduct(id);
+            return result is null ? NotFound() : Ok(result);
         }
+
         [HttpPost]
         public async Task<ActionResult<Product>> AddProduct(Product product)
         {
-            throw new NotImplementedException();
+            var result = await _productService.AddProduct(product);
+            return Ok(result);
         }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(int id, Product product)
         {
-            throw new NotImplementedException();
+            if (product.Id == id)
+            {
+                return BadRequest();
+            }
+
+            var result = await _productService.UpdateProduct(product);
+            if (result is null)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            throw new NotImplementedException();
-        }       
+            var result = await _productService.DeleteProduct(id);
+            if (result)
+            {
+                return NoContent();
+            }
+
+            return NotFound();
+        }
     }
 }

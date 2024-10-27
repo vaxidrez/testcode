@@ -15,6 +15,7 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<ProductRepository>();
 builder.Services.AddScoped<OrderRepository>();
+builder.Services.AddScoped<OrderProductRepository>();
 builder.Services.AddScoped<DataHelper>();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -28,6 +29,9 @@ var app = builder.Build();
 //app.UseHttpsRedirection();
 
 //app.UseAuthorization();
+
+
+
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProductOrderApi v1"));
 
